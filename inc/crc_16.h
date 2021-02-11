@@ -17,6 +17,8 @@
 // Provided services
 
 extern uint16_t crc_16(char *input_str, size_t num_bytes);
+extern uint16_t crc_16_reverse(char *input_str, size_t num_bytes);
+extern uint16_t crc_16_simple(char *input_str, size_t num_bytes);
 
 #endif /* SRC_CRC_16_H_ */
 

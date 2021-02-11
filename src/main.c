@@ -69,7 +69,7 @@ int main(int argc, char** argv) {
 
   if ((argc == 2) && ((strlen(argv[1]) <= BUF_SZ * 2))){
       len = hex2byte(argv[1], buf);
-      cksum = crc_16(buf, len);
+      cksum = crc_16_reverse(buf, len);
       printf("\nChecksum = %04hX\n", cksum);
   } else {
       printf("usage %s <hex (max %i bytes)>\n", argv[0], BUF_SZ);

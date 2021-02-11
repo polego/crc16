@@ -32,7 +32,7 @@ $(PRG): $(OBJ)
 	$(CC) -o $(EXE_DIR)/$(PRG) $(OBJ) $(CFLAGS) $(LFLAGS)
 
 clean:
-	rm -f $(PRG) $(OBJ) $(LIB_DIR)/$(LIB) *~ $(LIB_DIR)/*~ $(SRC_DIR)/*~ $(INC_DIR)/*~
+	rm -f $(EXE_DIR)/$(PRG) $(OBJ) $(LIB_DIR)/$(LIB) *~ $(LIB_DIR)/*~ $(SRC_DIR)/*~ $(INC_DIR)/*~
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(DEP_DIR)/$*.d
 	$(CC) -c -o $@ $< $(DFLAGS) $(CFLAGS) $(INCLUDE)
