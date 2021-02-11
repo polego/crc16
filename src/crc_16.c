@@ -13,11 +13,13 @@
 #include <stdio.h>
 #include "crc_16.h"
 
-#define	CRC_POLY  0x1021
-#define	CRC_START 0x0000
+//#define	CRC_POLY  0x1021
+// Use reverse bit order poly
+#define	CRC_POLY  0x8408
+#define	CRC_START 0xFFFF
 #define	CRC_MASK  0xFFFF
 
-static bool     crc_tab_init = true;
+static bool     crc_tab_init = false;
 
 // table precomputed and initialized for polynomial 0x1021
 static uint16_t crc_tab[256] = { 
@@ -81,7 +83,7 @@ static void init_crc_tab(void) {
   crc_tab_init = true;
 }
 
-uint16_t crc_16(char *input_str, size_t num_bytes) {
+uint16_t crc_16_orig(char *input_str, size_t num_bytes) {
   uint16_t crc;
   char *ptr;
   size_t a;
@@ -96,5 +98,29 @@ uint16_t crc_16(char *input_str, size_t num_bytes) {
       crc = (crc << 8) ^ crc_tab[ ((crc >> 8) ^ (uint16_t) *ptr++) & 0x00FF ];
     }
   
-  return crc;
+  return crc ^ CRC_MASK;
+}
+
+
+unsigned short crc_16(char *data_p, size_t length)
+{
+  unsigned char i;
+  unsigned int data;
+  unsigned int crc = CRC_START;
+  
+  if (length == 0)
+    return crc ^ CRC_MASK;
+  
+  do {
+      for (i=0, data=(unsigned int)0xff & *data_p++;
+	   i < 8; 
+	   i++, data >>= 1) {
+	if ((crc & 0x0001) ^ (data & 0x0001))
+	  crc = (crc >> 1) ^ CRC_POLY;
+	else  
+	  crc >>= 1;
+      }
+  } while (--length);
+  
+  return crc ^ CRC_MASK;
 }

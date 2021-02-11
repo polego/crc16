@@ -1,7 +1,6 @@
 CSCI_DIR=.
-LIB=libntfcrc.a
+LIB=libcrc.a
 PRG=crctest
-
 SRC_DIR=$(CSCI_DIR)/src
 INC_DIR=$(CSCI_DIR)/inc
 OBJ_DIR=$(CSCI_DIR)/obj
